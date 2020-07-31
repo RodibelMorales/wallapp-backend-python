@@ -6,7 +6,7 @@ from wallApp.models import Post
 from wallApp.posts.serializers import PostSerializer
 from django.contrib.auth.models import User
 
-
+#GET ALL POST
 @api_view(['GET',])
 def api_get_posts_view(request):
     try:
@@ -16,6 +16,7 @@ def api_get_posts_view(request):
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+#CREATE A NEW POST
 @api_view(['POST',])
 def api_create_posts_view(request):
     data={}
@@ -36,6 +37,7 @@ def api_create_posts_view(request):
         data["message"]=inst.args 
         return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
+#UPDATE POST INFORMATION BY ID
 @api_view(['UPDATE',])
 def api_update_posts_view(request,post_id):
     try:
@@ -51,6 +53,7 @@ def api_update_posts_view(request,post_id):
         return Response(data=data,status=status.HTTP_200_OK)
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+#DELETE A POST BY ID
 @api_view(['DELETE',])
 def api_delete_posts_view(request,post_id):
     try:
