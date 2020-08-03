@@ -13,4 +13,5 @@ urlpatterns = [
     #REST API URLS
     path('api/post/',include('wallApp.posts.urls','post_api')),
     path('api/comment/',include('wallApp.comments.urls','comment_api')),
+    path('api/account/',include('wallApp.account.urls','account_api'))
 ]

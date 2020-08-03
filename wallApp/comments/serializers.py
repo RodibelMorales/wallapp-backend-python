@@ -7,8 +7,8 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
         fields=[
-            'content',
-            'likes',
+            'comment',
+            'comment_likes',
             'created_at',
             'updated_at',
             'deleted_at',

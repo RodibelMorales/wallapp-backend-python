@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 
 from wallApp.models import Post
 from wallApp.posts.serializers import PostSerializer
-from django.contrib.auth.models import User
+from wallApp.models import User
 
 #GET ALL POST
 @api_view(['GET',])
