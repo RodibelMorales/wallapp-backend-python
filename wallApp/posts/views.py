@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
+from django.core.serializers import serialize
 from wallApp.models import Post
 from wallApp.posts.serializers import PostSerializer
 from wallApp.models import User
@@ -10,9 +10,9 @@ from wallApp.models import User
 @api_view(['GET',])
 def api_get_posts_view(request):
     try:
-        wallposts=Post.objects.get()
-        serializer=PostSerializer(wallposts)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        wallposts=Post.objects.all()
+        serializer=PostSerializer(wallposts,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK,content_type='aplication/json')
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

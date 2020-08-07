@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'wallApp',
-    'djoser'
+    'djoser',
+    
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  
+    'django.middleware.common.CommonMiddleware', 
 ]
 
 ROOT_URLCONF = 'BackendWallApp.urls'
@@ -167,3 +171,32 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '41058de37e5487'
 EMAIL_HOST_PASSWORD = '404c6428cbdd71'
 EMAIL_PORT = '2525'
+
+
+#CORS CONF
+ALLOWED_HOSTS = ["127.0.0.1","localhost", ]
+CORS_ORIGIN_WHITELIST = (
+    "http://127.0.0.1:4200",
+    "http://localhost:4200",
+)
+CORS_Origin_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',)
+
+CORS_ALLOW_HEADERS = (
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+'Access-Control-Allow-Origin',)
