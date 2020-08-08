@@ -10,7 +10,7 @@ from wallApp.models import User
 @api_view(['GET',])
 def api_get_posts_view(request):
     try:
-        wallposts=Post.objects.all()
+        wallposts=Post.objects.all().order_by('created_at').reverse()
         serializer=PostSerializer(wallposts,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK,content_type='aplication/json')
     except Post.DoesNotExist:

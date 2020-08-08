@@ -10,13 +10,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id','username','first_name','last_name')
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = PresentablePrimaryKeyRelatedField(
-        queryset=User.objects.all(),
-        presentation_serializer=UserSerializer
-    )
+    comment_owner = UserSerializer(source='user',read_only=True)
     class Meta:
         model = Comment
-        fields = ['comment', 'comment_likes', 'created_at','user']
+        fields = ['comment', 'comment_likes', 'created_at','comment_owner']
 
 class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
