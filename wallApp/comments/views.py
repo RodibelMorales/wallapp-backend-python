@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from wallApp.comments.serializers import CommentSerializer
 
-@api_view(['GET',])
+@api_view(['GET'])
 def api_get_comments_view(request):
     try:
         postComments=Comment.objects.get()
@@ -17,7 +17,7 @@ def api_get_comments_view(request):
     except Comment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['POST',])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def api_create_comment_view(request):
     data={}
@@ -38,7 +38,7 @@ def api_create_comment_view(request):
         data["message"]=inst.args
         return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['UPDATE',])
+@api_view(['UPDATE'])
 @permission_classes([IsAuthenticated])
 def api_update_comment_view(request,comment_id):
     data={}
@@ -54,7 +54,7 @@ def api_update_comment_view(request,comment_id):
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     except Comment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-@api_view(['DELETE',])
+@api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def api_delete_comment_view(request,comment_id):
     data={}
