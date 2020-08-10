@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
 from wallApp.models import Post
 from wallApp.models import Comment
 from django.contrib.auth.models import User
@@ -18,6 +18,7 @@ def api_get_comments_view(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST',])
+@permission_classes([IsAuthenticated])
 def api_create_comment_view(request):
     data={}
     CommentData=Comment(
@@ -38,6 +39,7 @@ def api_create_comment_view(request):
         return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['UPDATE',])
+@permission_classes([IsAuthenticated])
 def api_update_comment_view(request,comment_id):
     data={}
     try:
@@ -53,6 +55,7 @@ def api_update_comment_view(request,comment_id):
     except Comment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 @api_view(['DELETE',])
+@permission_classes([IsAuthenticated])
 def api_delete_comment_view(request,comment_id):
     data={}
     try:

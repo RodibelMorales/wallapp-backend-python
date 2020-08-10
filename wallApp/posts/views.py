@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
 from django.core.serializers import serialize
 from wallApp.models import Post
 from wallApp.posts.serializers import PostSerializer
@@ -17,7 +18,8 @@ def api_get_posts_view(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 #CREATE A NEW POST
-@api_view(['POST',])
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def api_create_posts_view(request):
     data={}
     PostData=Post(
@@ -38,7 +40,8 @@ def api_create_posts_view(request):
         return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
 #UPDATE POST INFORMATION BY ID
-@api_view(['UPDATE',])
+@api_view(['UPDATE'])
+@permission_classes([IsAuthenticated])
 def api_update_posts_view(request,post_id):
     try:
         wallposts=Post.objects.get(pk=post_id)
@@ -54,7 +57,8 @@ def api_update_posts_view(request,post_id):
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 #DELETE A POST BY ID
-@api_view(['DELETE',])
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def api_delete_posts_view(request,post_id):
     try:
         wallposts=Post.objects.get(pk=post_id)
