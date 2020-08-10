@@ -8,5 +8,10 @@ from rest_framework import routers, serializers, viewsets
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls'))
+    url(r'^api-auth/', include('rest_framework.urls')),
+
+    #REST API URLS
+    path('api/post/',include('wallApp.posts.urls','post_api')),
+    path('api/comment/',include('wallApp.comments.urls','comment_api')),
+    path('api/account/',include('wallApp.account.urls','account_api'))
 ]

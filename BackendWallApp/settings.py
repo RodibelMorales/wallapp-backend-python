@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'rest_framework',
-     'wallApp',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'wallApp',
+    'djoser',
+    
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  
+    'django.middleware.common.CommonMiddleware', 
 ]
 
 ROOT_URLCONF = 'BackendWallApp.urls'
@@ -56,7 +62,9 @@ ROOT_URLCONF = 'BackendWallApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +97,36 @@ DATABASES = {
     }
 }
 
+#REST FRAMEWORK CONFIGURATION
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSIONS_CLASSES':(
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+AUTH_USER_MODEL='wallApp.User'
+
+#DJOSER CONFIGURATION
+DJOSER={
+    'LOGIN_FIELD':'email',
+    'USER_CREATE_PASSWORD_RETYPE':True,
+    #'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    #'ACTIVATION_URL': '/activate/{uid}/{token}',
+    #'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS':{
+        'user_create':'wallApp.serializers.UserCreateSerializer',
+        'user':'wallApp.serializers.UserCreateSerializer',
+    },
+    #'EMAIL':{
+    #    'activation': 'wallApp.templates.activateAccount',
+    #    'password_reset': 'wallApp.templates.passwordReset',
+    #}
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -127,3 +165,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#email data
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '41058de37e5487'
+EMAIL_HOST_PASSWORD = '404c6428cbdd71'
+EMAIL_PORT = '2525'
+
+
+#CORS CONF
+ALLOWED_HOSTS = ["127.0.0.1","localhost", ]
+CORS_ORIGIN_WHITELIST = (
+    "http://127.0.0.1:4200",
+    "http://localhost:4200",
+)
+CORS_Origin_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',)
+
+CORS_ALLOW_HEADERS = (
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+'Access-Control-Allow-Origin',)
